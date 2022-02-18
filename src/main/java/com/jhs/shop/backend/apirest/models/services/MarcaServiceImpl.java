@@ -3,14 +3,17 @@ package com.jhs.shop.backend.apirest.models.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.jhs.shop.backend.apirest.models.dao.IMarcaDao;
 import com.jhs.shop.backend.apirest.models.entity.Marca;
 
+@Service
 public class MarcaServiceImpl implements IMarcaService{
 
 	@Autowired
-	private IMarcaService marcaDao;
+	private IMarcaDao marcaDao;
 	
 	@Override
 	@Transactional
@@ -28,17 +31,16 @@ public class MarcaServiceImpl implements IMarcaService{
 
 	@Override
 	@Transactional
-	public Marca findById(Long id) {
+	public Marca findById(Integer id) {
 		// TODO Auto-generated method stub
-		return marcaDao.findById(id);
+		return marcaDao.findById(id).orElse(null);
 	}
 
 	@Override
 	@Transactional
-	public void delete(Long id) {
+	public void delete(Integer id) {
 		// TODO Auto-generated method stub
-		marcaDao.delete(id);
-		
+		marcaDao.deleteById(id);		
 	}
 
 }

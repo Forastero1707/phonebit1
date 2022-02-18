@@ -10,6 +10,8 @@ import com.jhs.shop.backend.apirest.models.entity.Product;
 @Service
 public interface IProductService {
 	public List<Product> findAll();
+	public List<Product> findProductCategorySubCategoryMarca(Integer categoryId, Integer subcategoryId, Integer marcaId);
+	public List<Product> findProductCategorySubCategory(Integer categoryId, Integer subcategoryId);
 	public Product save(Product producto);
 	public Product findById(Long id);
 	public Page<Product> findAll(Pageable pageable);

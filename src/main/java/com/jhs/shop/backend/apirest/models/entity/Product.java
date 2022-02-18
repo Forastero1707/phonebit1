@@ -56,7 +56,7 @@ public class Product implements Serializable {
 	@OneToMany(fetch=FetchType.EAGER)
 	@JoinColumn(name = "productId", nullable = true)
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-	private List<DetailProduct> items;
+	private List<ProductDetail> items;
 	
 	/*@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="id", nullable=false, insertable=false, updatable = false)
@@ -229,11 +229,11 @@ public class Product implements Serializable {
 
 
 
-	public List<DetailProduct> getItems() {
+	public List<ProductDetail> getItems() {
 		return items;
 	}
 
-	public void setItems(List<DetailProduct> items) {
+	public void setItems(List<ProductDetail> items) {
 		this.items = items;
 	}
 	/**

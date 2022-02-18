@@ -2,8 +2,6 @@ package com.jhs.shop.backend.apirest.controllers;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.http.HttpStatus;
@@ -13,36 +11,32 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jhs.shop.backend.apirest.models.entity.Category;
-import com.jhs.shop.backend.apirest.models.entity.Characteristic;
 import com.jhs.shop.backend.apirest.models.entity.SubCategory;
-import com.jhs.shop.backend.apirest.models.services.ICategoryService;
+import com.jhs.shop.backend.apirest.models.services.ISubCategoryService;
 
-@CrossOrigin(origins = {"https://phonebit1.web.app", "http://localhost:4200", "*"}, allowedHeaders = "*") 
+@CrossOrigin(origins = {"https://phonebit1.web.app", "http://localhost:4200", "*"}, methods= {RequestMethod.GET,RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT}, allowedHeaders = "*") 
 @RestController
 @RequestMapping("/api")
+public class SubCategoryRestController {
 
-public class CategoryRestController {
-	
 	@Autowired
-	private ICategoryService categoryService;
+	private ISubCategoryService subcategoryService;
 	
-	private final Logger log = LoggerFactory.getLogger(CategoryRestController.class);
-
-	@GetMapping("/categories")
-	public List<Category> index(){
-		return categoryService.findAll();
-	}
-	
-	@PostMapping("/categoryform")
+	@PostMapping("/subcategory/form")
 	@Modifying(clearAutomatically = true)
 	@ResponseStatus(HttpStatus.CREATED)
-	public Category create(@RequestBody Category category) {
-		return categoryService.save(category);
+	public SubCategory create (@RequestBody SubCategory subcategory)
+	{
+		return subcategoryService.save(subcategory);
 	}
-	
+	@GetMapping("/subcategories")
+	public List<SubCategory> index(){
+		return subcategoryService.findAll();
+	}
 	
 }

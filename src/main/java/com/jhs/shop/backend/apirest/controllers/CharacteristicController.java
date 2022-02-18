@@ -1,0 +1,47 @@
+package com.jhs.shop.backend.apirest.controllers;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.jhs.shop.backend.apirest.models.entity.Characteristic;
+import com.jhs.shop.backend.apirest.models.entity.SubCategory;
+import com.jhs.shop.backend.apirest.models.services.ICharacteristicService;
+
+@CrossOrigin(origins = {"https://phonebit1.web.app", "http://localhost:4200", "*"}, methods= {RequestMethod.GET,RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT}, allowedHeaders = "*") 
+@RestController
+@RequestMapping("/api")
+public class CharacteristicController {
+	@Autowired
+	private ICharacteristicService characteristicService;
+	
+	@GetMapping("/characteristic")
+	public List<Characteristic> index(){
+		return characteristicService.findAll();
+	}
+	
+	@PostMapping("/characteristic/form")
+	@Modifying(clearAutomatically = true)
+	@ResponseStatus(HttpStatus.CREATED)
+	public Characteristic create(@RequestBody Characteristic characteristic) {
+		return characteristicService.save(characteristic);
+	}	
+	
+	@GetMapping("/characteristic/{categoryId}/{subcategoryId}")
+	public List<Characteristic> characteristics(@PathVariable Integer categoryId, @PathVariable Integer subcategoryId)
+	{
+		return characteristicService.findCharacteristicsByCategoryAndSubCategory(categoryId, subcategoryId);
+	}
+
+}

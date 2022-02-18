@@ -8,8 +8,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.jhs.shop.backend.apirest.models.dao.ICategoryDao;
 import com.jhs.shop.backend.apirest.models.entity.Category;
+import com.jhs.shop.backend.apirest.models.entity.Characteristic;
+import com.jhs.shop.backend.apirest.models.entity.SubCategory;
 
 @Service
+@Transactional
 public class CategoryServiceImpl implements ICategoryService{
 	
 	@Autowired
@@ -17,7 +20,7 @@ public class CategoryServiceImpl implements ICategoryService{
 	
 
 	@Override
-	@Transactional
+	@Transactional(readOnly = true)
 	public List<Category> findAll() {
 		// TODO Auto-generated method stub
 		
@@ -33,15 +36,21 @@ public class CategoryServiceImpl implements ICategoryService{
 	}
 
 	@Override
-	public Category findById(Long id) {
+	public Category findById(Integer id) {
 		// TODO Auto-generated method stub
 		return categoriaDao.findById(id).orElse(null);
 	}
 
 	@Override
 	@Transactional
-	public void delete(Long id) {
+	public void delete(Integer id) {
 		// TODO Auto-generated method stub
 		categoriaDao.deleteById(id);		
+	}	
+
+	@Override
+	public List<SubCategory> findSubcategoryBycategoryId(Integer id) {
+		// TODO Auto-generated method stub
+		return categoriaDao.findSubcategoryBycategoryId(id);
 	}
 }

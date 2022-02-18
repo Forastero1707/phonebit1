@@ -3,12 +3,13 @@ package com.jhs.shop.backend.apirest.models.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jhs.shop.backend.apirest.models.dao.ICharacteristicDao;
 import com.jhs.shop.backend.apirest.models.entity.Characteristic;
-import com.jhs.shop.backend.apirest.models.entity.CharacteristicPK;
-
+import com.jhs.shop.backend.apirest.models.entity.SubCategory;
+@Service
 public class CharacteristicServiceImpl implements ICharacteristicService{
 	
 	@Autowired
@@ -27,14 +28,24 @@ public class CharacteristicServiceImpl implements ICharacteristicService{
 	}
 
 	@Override
-	public Characteristic findById(CharacteristicPK clave) {
+	public Characteristic findById(Integer id) {
 		// TODO Auto-generated method stub
-		return caracteristicaDao.findById(clave).orElse(null);
+		return null;//caracteristicaDao.findAllById(id);
 	}
 
 	@Override
-	public void delete(CharacteristicPK clave) {
+	public void delete(Integer id) {
 		// TODO Auto-generated method stub
-		caracteristicaDao.deleteById(clave);		
+		//caracteristicaDao.deleteById(id);		
 	}
+
+	@Override
+	public List<Characteristic> findCharacteristicsByCategoryAndSubCategory(Integer categoryId, Integer subcategoryId) {
+		// TODO Auto-generated method stub
+		return caracteristicaDao.findCharacteristicsByCategoryAndSubCategory(categoryId, subcategoryId);
+	}
+
+	
+
+	
 }

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jhs.shop.backend.apirest.models.entity.User;
 import com.jhs.shop.backend.apirest.models.services.IUserService;
-@CrossOrigin(origins = { "http://localhost:4200"})
+@CrossOrigin(origins = {"https://phonebit1.web.app", "http://localhost:4200", "*"}, allowedHeaders = "*")
 @RestController
 @RequestMapping("/api")
 public class UserRestController {

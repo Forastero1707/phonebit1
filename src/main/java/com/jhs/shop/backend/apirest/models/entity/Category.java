@@ -2,7 +2,9 @@ package com.jhs.shop.backend.apirest.models.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,8 +14,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name="category")
@@ -22,27 +28,32 @@ public class Category implements Serializable{
 	
 	@Id	
 	@GeneratedValue( strategy=GenerationType.IDENTITY )
-	private Long id;
-	private Long parentId;
+	private Integer id;
+	private Integer parentId;
 	private String title;
 	private String metaTitle;
 	private String slug;
 	private String content;
-	private String link;
+	private String link;	
 	
-	/*@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "categoryId")
-	private List<SubCategory> items;*/
+	@JoinTable(
+	        name = "category_subcategory",
+	        joinColumns = @JoinColumn(name = "categoryId", nullable = false),
+	        inverseJoinColumns = @JoinColumn(name="subcategoryId", nullable = false)
+	    )
+	@ManyToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	private List<SubCategory> subcategories;
 	
-	
+	@OneToMany(mappedBy = "category")
+	Set<Relations> relations  = new HashSet<>();	
 	
 	public Category() 
 	{
 				//items = new ArrayList<>();
 	}
 	
-	public Category(Long id, Long parentId, String title, String metaTitle, String slug, String content, String link) {
-		super();
+	public Category(Integer id, Integer parentId, String title, String metaTitle, String slug, String content, String link, List<SubCategory> subcategories) {
 		this.id = id;
 		this.parentId = parentId;
 		this.title = title;
@@ -50,17 +61,18 @@ public class Category implements Serializable{
 		this.slug = slug;
 		this.content = content;
 		this.link = link;
+		this.subcategories = subcategories;
 	}
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Long getParentId() {
+	public Integer getParentId() {
 		return parentId;
 	}
-	public void setParentId(Long parentId) {
+	public void setParentId(Integer parentId) {
 		this.parentId = parentId;
 	}
 	public String getTitle() {
@@ -105,6 +117,22 @@ public class Category implements Serializable{
 		this.link = link;
 	}
 
+
+	public List<SubCategory> getSubcategories() {
+		return subcategories;
+	}
+
+	public void setSubcategories(List<SubCategory> subcategories) {
+		this.subcategories = subcategories;
+	}	
+
+	/*public Set<Relations> getRelations() {
+		return relations;
+	}*/
+
+	public void setRelations(Set<Relations> relations) {
+		this.relations = relations;
+	}
 
 	/**
 	 * 

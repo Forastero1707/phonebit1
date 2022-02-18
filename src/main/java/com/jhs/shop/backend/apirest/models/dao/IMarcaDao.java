@@ -5,6 +5,6 @@ import org.springframework.data.repository.CrudRepository;
 import com.jhs.shop.backend.apirest.models.entity.Marca;
 
 
-public interface IMarcaDao extends CrudRepository<Marca, Long>{
+public interface IMarcaDao extends CrudRepository<Marca, Integer>{
 
 }
